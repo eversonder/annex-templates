@@ -1,0 +1,15 @@
+# A headless browser: Playwright with Chromium, for reading pages that need one.
+# check: cd /tmp && node -e "const {chromium}=require('/usr/local/lib/node_modules/playwright');(async()=>{const b=await chromium.launch();const p=await b.newPage();await p.goto('https://example.com');console.log(await p.title());await b.close()})()"
+name: browser
+description: Playwright with headless Chromium
+vcpu: 2
+memory_gib: 4
+route: cheapest
+setup:
+  - |
+    S=; [ "$(id -u)" = 0 ] || S=sudo
+    $S apt-get update && $S env DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs npm
+  - |
+    S=; [ "$(id -u)" = 0 ] || S=sudo
+    $S npm install -g playwright && $S env DEBIAN_FRONTEND=noninteractive npx playwright install-deps chromium
+  - npx playwright install chromium

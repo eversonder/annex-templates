@@ -1,0 +1,11 @@
+# Go and git.
+# check: go version && git --version
+name: go
+description: Go and git
+vcpu: 2
+memory_gib: 4
+route: cheapest
+setup:
+  - |
+    S=; [ "$(id -u)" = 0 ] || S=sudo
+    $S apt-get update && $S env DEBIAN_FRONTEND=noninteractive apt-get install -y golang-go git ca-certificates

@@ -1,0 +1,15 @@
+# Rust, from rustup, with a C toolchain for crates that need one.
+# check: cargo --version && rustc --version && cc --version
+name: rust
+description: Rust (stable, from rustup) and a C toolchain
+vcpu: 4
+memory_gib: 8
+route: cheapest
+setup:
+  - |
+    S=; [ "$(id -u)" = 0 ] || S=sudo
+    $S apt-get update && $S env DEBIAN_FRONTEND=noninteractive apt-get install -y curl ca-certificates build-essential git
+  - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
+  - |
+    S=; [ "$(id -u)" = 0 ] || S=sudo
+    $S ln -sf "$HOME"/.cargo/bin/* /usr/local/bin/

@@ -1,0 +1,16 @@
+# Claude Code, with git and the GitHub command, for an agent that works on a repository.
+# Put ANTHROPIC_API_KEY (and GH_TOKEN, to push) in a secret group and name it under secret_groups.
+# check: claude --version && gh --version && git --version
+name: claude-code
+description: Claude Code, git and the GitHub command
+vcpu: 2
+memory_gib: 4
+route: cheapest
+# secret_groups: [claude]
+setup:
+  - |
+    S=; [ "$(id -u)" = 0 ] || S=sudo
+    $S apt-get update && $S env DEBIAN_FRONTEND=noninteractive apt-get install -y git gh nodejs npm
+  - |
+    S=; [ "$(id -u)" = 0 ] || S=sudo
+    $S npm install -g @anthropic-ai/claude-code

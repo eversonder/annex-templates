@@ -1,0 +1,12 @@
+# Python for working with data: pandas, numpy, scipy and matplotlib.
+# check: python3 -c "import pandas, numpy, scipy, matplotlib; print(pandas.__version__)"
+name: python-data
+description: Python with pandas, numpy, scipy and matplotlib
+vcpu: 2
+memory_gib: 4
+route: cheapest
+setup:
+  - |
+    S=; [ "$(id -u)" = 0 ] || S=sudo
+    $S apt-get update && $S env DEBIAN_FRONTEND=noninteractive apt-get install -y python3 python3-pip
+  - pip3 install --break-system-packages pandas numpy scipy matplotlib || pip3 install pandas numpy scipy matplotlib
